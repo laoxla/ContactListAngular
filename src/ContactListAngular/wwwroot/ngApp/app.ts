@@ -46,19 +46,32 @@ namespace ContactListAngular {
 
     class VideoController {
 
+
+
+        constructor(private ContactManagerService: ContactManagerService) {
+        }
+        get contacts() {
+            return this.ContactManagerService.contacts;
+        }
+
+
+
+
         public videos = ["Thor", "MidNight run", "Thor", "Heat", "Heat", "Cool Blue", "The Game", "Thor"]
     }
 
     angular.module("ContactListAngular").controller("VideoController", VideoController);
 
+
+
     function unique() {
         //Actual filter
-        return function (input) {
+        return function (input, key) {
 
             let uniqueElements = [];
             input.forEach(function (ele) {
                 if (uniqueElements.every(function (uni) {
-                    return ele !== uni;
+                    return ele[key] !== uni[key];
                 })) {
                     uniqueElements.push(ele);
                 }
@@ -66,6 +79,20 @@ namespace ContactListAngular {
             return uniqueElements;
         };
     }
-    angular.module("ContactListAngular").filter("unique", unique);  
+    angular.module("ContactListAngular").filter("unique", unique);
+
+  
+
+    class ContactManagerService {
+      
+
+        public contacts = [];
+        addContact(name, phone, email) {
+            this.contacts.push(new Contact(name, phone, email));
+        }
+
+    }
+    angular.module("ContactListAngular").service("ContactManagerService", ContactManagerService);
+    
 }
 

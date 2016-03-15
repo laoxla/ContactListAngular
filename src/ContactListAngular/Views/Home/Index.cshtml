@@ -38,6 +38,20 @@
 
       </ul>
 
+        <form ng-submit="controller.ContactManagerService.addContact(name, phone, email)">
+            <input ng-model="name" placeholder="Name" />
+            <input ng-model="phone" placeholder="Phone Number" />
+            <input ng-model="email" placeholder="Email Address" />
+            <input type="submit" value="Add Contact" />
+
+        </form>
+        <table>
+            <tr ng-repeat="contact in controller.contacts| unique: name">
+                <td>{{contact.name}}</td>
+                <td>{{contact.phone}}</td>
+                <td>{{contact.email}}</td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

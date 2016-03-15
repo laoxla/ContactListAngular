@@ -34,19 +34,27 @@ var ContactListAngular;
     //}
     //angular.module("ContactListAngular").filter("startsWith", startsWith);
     var VideoController = (function () {
-        function VideoController() {
+        function VideoController(ContactManagerService) {
+            this.ContactManagerService = ContactManagerService;
             this.videos = ["Thor", "MidNight run", "Thor", "Heat", "Heat", "Cool Blue", "The Game", "Thor"];
         }
+        Object.defineProperty(VideoController.prototype, "contacts", {
+            get: function () {
+                return this.ContactManagerService.contacts;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return VideoController;
     }());
     angular.module("ContactListAngular").controller("VideoController", VideoController);
     function unique() {
         //Actual filter
-        return function (input) {
+        return function (input, key) {
             var uniqueElements = [];
             input.forEach(function (ele) {
                 if (uniqueElements.every(function (uni) {
-                    return ele !== uni;
+                    return ele[key] !== uni[key];
                 })) {
                     uniqueElements.push(ele);
                 }
@@ -55,5 +63,15 @@ var ContactListAngular;
         };
     }
     angular.module("ContactListAngular").filter("unique", unique);
+    var ContactManagerService = (function () {
+        function ContactManagerService() {
+            this.contacts = [];
+        }
+        ContactManagerService.prototype.addContact = function (name, phone, email) {
+            this.contacts.push(new Contact(name, phone, email));
+        };
+        return ContactManagerService;
+    }());
+    angular.module("ContactListAngular").service("ContactManagerService", ContactManagerService);
 })(ContactListAngular || (ContactListAngular = {}));
 //# sourceMappingURL=app.js.map
