@@ -1,0 +1,43 @@
+﻿
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="ContactListAngular">
+<head>
+    <title></title>
+    <script src="~/lib/angular/angular.js"></script>
+    <script src="~/ngApp/app.js"></script>
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+    hello world!
+    <div ng-controller="HomeController as controller">
+        <ul>
+            <li ng-repeat="contact in controller.contactList" id="list">{{contact.report()}}</li>
+        </ul>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="contact in controller.contactList" >
+                    <td>{{contact.name}}</td>              
+                    <td>{{contact.phone}}</td>
+                    <td>{{contact.email}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div ng-controller="VideoController as controller">
+      <ul>
+          <li ng-repeat="video in controller.videos| unique">{{video}}</li>
+
+      </ul>
+
+    </div>
+</body>
+</html>
